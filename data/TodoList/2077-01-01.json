@@ -1,0 +1,25 @@
+{
+  "date": "2077-01-01",
+  "tasks": [
+    {
+      "type": "stream",
+      "start_time": "20:00",
+      "end_time": "22:00",
+      "content": "一起來玩Silent Hill f!"
+    },
+    {
+      "type": "tweet",
+      "start_time": "13:00",
+      "end_time": "13:30",
+      "category": "preview",
+      "content": "直播預告推文",
+      "content_required": true
+    },
+    {
+      "type": "cover",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "content": "製作直播封面"
+    }
+  ]
+}

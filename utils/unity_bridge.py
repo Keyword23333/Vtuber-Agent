@@ -13,7 +13,7 @@ class UnityBridge:
         self.server.listen(1)
 
         print(f"[Python] UnityBridge server started at {host}:{port}")
-        threading.Thread(target=self.wait_for_unity, daemon=True).start()
+        #threading.Thread(target=self.wait_for_unity, daemon=True).start()
 
     def wait_for_unity(self):
         print("[Python] Waiting for Unity connection...")
@@ -35,17 +35,13 @@ class UnityBridge:
 
     def update_background(self, game_datetime):
         hour = game_datetime.hour
-        print("current hour", hour)
+
         if hour >= 20 or hour < 5:
             mode = "night"
         elif hour >= 17 and hour < 20:
             mode = "evening"
         else:
             mode = "day"
-        self.send({
-                "event": "background",
-                "mode": mode
-            })
 
         if mode != self.last_background_state:
             self.last_background_state = mode

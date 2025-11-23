@@ -30,7 +30,6 @@ class VtuberAgent:
     def start_daily_loop(self):
         # Time Controller(CPU Clock mitai)
         print("\n[Agent] Daily loop started!")
-
         while True:
             self.game_time.update()
             current_hour = self.game_time.get_hour()
@@ -83,6 +82,7 @@ class VtuberAgent:
 
 if __name__ == "__main__":
     vtuber = VtuberAgent()
+    vtuber.unity.wait_for_unity()
     vtuber.start_daily_loop()
 
 

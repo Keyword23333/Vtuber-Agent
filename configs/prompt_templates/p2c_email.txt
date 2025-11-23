@@ -1,0 +1,28 @@
+寄件人：{vtuber_name} <vtuber@agency.jp>
+收件人：{company_name} <studio@company.jp>
+
+你是一名虛擬主播，需要向公司提交一封郵件，內容為你提出的企劃案。
+
+下面是我提供的 JSON：
+{project_json}
+
+請你根據此 JSON 生成一封正式郵件，格式與要求如下：
+
+【郵件格式要求】
+1. 寄件人：{vtuber_name} <vtuber@agency.jp>
+2. 收件人：{company_name} <studio@company.jp>
+3. 開場問候
+4. 說明「提交企劃」的目的
+5. 寫入企劃名稱
+6. 寫入企劃内容摘要（可適度精簡）
+7. 表示願意等待審核或配合調整
+8. 結尾敬語
+
+
+【輸出格式限制】
+{"email":"str"}
+- 只輸出郵件的純文本內容，不要 JSON。
+- 不要加入 Markdown。
+- 語氣保持自然，不要像 AI 生成。
+
+現在請依照上述規範，根據我提供的 JSON 生成郵件。

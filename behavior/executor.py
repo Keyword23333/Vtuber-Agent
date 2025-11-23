@@ -1,4 +1,5 @@
 import sys
+import json
 from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
@@ -53,7 +54,7 @@ class Executor:
         final_prompt += f"\n[使用者輸入]\n{content}\n"
         print(f"\n[Tweet] Using prompt as \n{final_prompt}\n")
         response = self.llm.ask_json(final_prompt)
-        print(f"\n[Tweet] Get prompt as \n{response}\n")
+        print(f"\n[Tweet] Get tweet as \n{response}\n")
 
     def generate_cover(self, cover_task):
         print("\n[Cover] Generate stream's cover...\n")
@@ -64,9 +65,52 @@ class Executor:
         img_link = self.gm.ask_json(final_prompt)
         print(f"\n[Cover] Get image link as \n{img_link}\n")
 
-
-
+    def post_project(self, project_task, game_time):
+        print("\n[Project] Thinking of new project...\n")
+        # generate project content...
+        content = project_task.get("content","")
+        template_path = project_root / "configs" / "prompt_templates" / "project.txt"
+        p = template_path.read_text(encoding="utf-8")
         
+        final_prompt = ""
+        final_prompt += p
+        final_prompt += f"\n[使用者輸入]\n{content}\n"
+
+        print(f"\n[Project] Using prompt as\n{final_prompt}\n")
+        project_json = self.llm.ask_json(final_prompt)
+        project_json_str = json.dumps(project_json, indent=2, ensure_ascii=False)
+        print(f"\n[Project] Get project as\n{project_json}\n")
+
+        # generate project email...
+        print("\n[Project] Writing email to company...\n")
+        template_path = project_root / "configs" / "prompt_templates" / "p2c_email.txt"
+        p = template_path.read_text(encoding="utf-8")
+
+        p.replace("{vtuber_name}", persona['name'])
+        p.replace("{company_name}", "2333")
+        p.replace("{project_json}", project_json_str)
+
+        print(f"\n[Project] Using prompt as\n{p}\n")
+        response = self.llm.ask_json(p)
+        print(f"\n[Project] Get email as\n{response}\n")
+
+        # send project email to company's mailbox
+        mail_content = response.get("email","")
+        mail_dir = project_root / "data" / "Company_Mailbox"
+        mail_dir.mkdir(parents=True, exist_ok=True)
+        file_date = game_time.strftime("P%Y-%m-%d.txt")
+        file_path = mail_dir / file_date
+        counter = 1
+        original_path = file_path
+        while file_path.exists():
+            file_name = f"{original_path.stem}_{counter}{original_path.suffix}"
+            file_path = original_path.parent / file_name
+            counter += 1
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(mail_content)
+
+        print(f"\n[Project] Email saved to: {file_path}\n")
+
 
  
 

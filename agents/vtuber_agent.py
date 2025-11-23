@@ -53,7 +53,7 @@ class VtuberAgent:
                 task_hours, task_minutes = task_start_time.split(":")
                 task_total_minutes = int(task_hours) * 60 + int(task_minutes)
                 if current_total_minutes >= task_total_minutes:
-                    self.planner.classifier(next_task)
+                    self.planner.classifier(next_task, current_game_time)
                     self.schedule.pop(0)
             # end the day at 3:00 am
             if current_hour == 3:

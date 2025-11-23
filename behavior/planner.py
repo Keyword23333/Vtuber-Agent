@@ -22,7 +22,7 @@ class Planner:
         self.mail_loader = MailLoader()
         self.executor = Executor(api_key, base_url, model)
 
-    def classifier(self, task):
+    def classifier(self, task, game_time):
         print(task)
         type = task.get("type","")
         if type == "tweet":
@@ -34,7 +34,7 @@ class Planner:
         if type == "cover":
             self.executor.generate_cover(task)
         if type == "project":
-            pass
+            self.executor.post_project(task, game_time)
         
     def normalize(self, todolist):
         tasks = todolist.get("tasks",[])

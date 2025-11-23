@@ -8,6 +8,7 @@ sys.path.insert(0, str(project_root))
 
 from utils.game_time import GameTime
 from utils.loader import TodoListLoader
+from utils.unity_bridge import UnityBridge
 from behavior.planner import Planner
 
 class VtuberAgent:
@@ -24,6 +25,7 @@ class VtuberAgent:
         self.todolist_loader = TodoListLoader() # update everyday
         self.day_started = False
         self.planner = Planner()
+        self.unity = UnityBridge()
 
     def start_daily_loop(self):
         # Time Controller(CPU Clock mitai)
@@ -37,6 +39,8 @@ class VtuberAgent:
             current_hours, current_minutes = current_time_str.split(":")
             current_total_minutes = int(current_hours) * 60 + int(current_minutes)
             print(f"[时间测试] 游戏时间: {current_game_time.strftime('%Y-%m-%d %H:%M:%S')} | ")
+            self.unity.send_time(current_time_str)
+            self.unity.update_background(current_game_time)
             # Work start from 8:00 am every day(includeing weekends)
             if self.day_started == False and current_hour == 8:
                 """

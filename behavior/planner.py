@@ -17,10 +17,10 @@ class Planner:
     todolist generation...
     task execution
     """
-    def __init__(self):
-        self.llm = QwenLLM()
+    def __init__(self, api_key=None, base_url=None, model=None):
+        self.llm = QwenLLM(api_key, base_url, model)
         self.mail_loader = MailLoader()
-        self.executor = Executor()
+        self.executor = Executor(api_key, base_url, model)
 
     def classifier(self, task):
         print(task)
@@ -29,7 +29,11 @@ class Planner:
             category = task.get("category","")
             if category == "preview":
                 self.executor.post_preview(task)
+            elif category == "communication":
+                self.executor.post_communication(task)
         if type == "cover":
+            self.executor.generate_cover(task)
+        if type == "project":
             pass
         
     def normalize(self, todolist):
@@ -75,6 +79,7 @@ class Planner:
         final_prompt += p
         content = self.llm.ask_json(final_prompt)
         return content
+    
 
 
 # for test, please ignore...

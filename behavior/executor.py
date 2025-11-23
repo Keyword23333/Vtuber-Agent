@@ -18,7 +18,6 @@ class Executor:
     def post_preview(self, tweet_task):
         print("\n[Tweet] Post today's stream preview...\n")
         content = tweet_task.get("content","")
-        print(tweet_task)
         template_path = project_root / "configs" / "prompt_templates" / "tweet.txt"
         p = template_path.read_text(encoding="utf-8")
 
@@ -32,9 +31,38 @@ class Executor:
 
         final_prompt += p
         final_prompt += f"\n[使用者輸入]\n{content}\n"
-        print(final_prompt)
+        print(f"\n[Tweet] Using prompt as \n{final_prompt}\n")
         response = self.llm.ask_json(final_prompt)
-        print(response)
+        print(f"\n[Tweet] Get prompt as \n{response}\n")
+
+    def post_communication(self, tweet_task):
+        print("\n[Tweet] Post communication tag...\n")
+        content = tweet_task.get("content","")
+        template_path = project_root / "configs" / "prompt_templates" / "tweet.txt"
+        p = template_path.read_text(encoding="utf-8")
+
+        final_prompt = ""
+        final_prompt += (
+            f"主播名字：{persona['name']}\n"
+            f"説話風格：{persona['style']}\n"
+            f"行爲特徵：{persona['behavior_traits']}\n"
+            "\n"
+        )
+
+        final_prompt += p
+        final_prompt += f"\n[使用者輸入]\n{content}\n"
+        print(f"\n[Tweet] Using prompt as \n{final_prompt}\n")
+        response = self.llm.ask_json(final_prompt)
+        print(f"\n[Tweet] Get prompt as \n{response}\n")
+
+    def generate_cover(self, cover_task):
+        print("\n[Cover] Generate stream's cover...\n")
+        content = cover_task.get("content","")
+        
+        final_prompt = f"請生成一張圖片，要求如下\n {content}\n"
+        print(f"\n[Cover] Using prompt as \n {final_prompt}\n")
+        img_link = self.gm.ask_json(final_prompt)
+        print(f"\n[Cover] Get image link as \n{img_link}\n")
 
 
 

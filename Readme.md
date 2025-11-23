@@ -149,6 +149,6 @@ root/
 ```
 
 - 其中"type"表示平臺類型，必填，只能從下面幾個選項中選擇："stream","company","cover","store","tweet","rest","project"（其中project是想企劃案）
-- "category"表示平臺下的任務細分，其中"stream","cover","store"沒有這一項；"tweet"下可選參數："preview","communication"；"company"下可選參數："ad", "shoot"（ad表示廣告，shoot表示拍攝）
+- "category"表示平臺下的任務細分，其中"stream","cover","store"沒有這一項；"tweet"下可選參數："preview","communication"；"company"下可選參數："shoot"（shoot表示拍攝）
 -  "start_time" 和 "end_time"表示開始和結束的時間
 -  "content"就是任務的具體内容。如果有直播，那麽推特和封面的content和直播主題吻合（推特的content最好包括直播的時間和内容概括即可，不需要很具體）。

@@ -17,10 +17,12 @@ class Planner:
     todolist generation...
     task execution
     """
-    def __init__(self, api_key=None, base_url=None, model=None):
+    def __init__(self, unity_bridge, api_key=None, base_url=None, model=None):
         self.llm = QwenLLM(api_key, base_url, model)
         self.mail_loader = MailLoader()
-        self.executor = Executor(api_key, base_url, model)
+        self.unity_bridge = unity_bridge
+        self.executor = Executor(unity_bridge,api_key, base_url, model)
+
 
     def classifier(self, task, game_time):
         print(task)

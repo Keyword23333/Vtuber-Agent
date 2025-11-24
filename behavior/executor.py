@@ -12,12 +12,14 @@ class Executor:
     - post something on tweet
     - generate cover
     """
-    def __init__(self, api_key=None, base_url=None, model=None):
+    def __init__(self, unity_bridge, api_key=None, base_url=None, model=None):
         self.llm = QwenLLM(api_key, base_url, model)
         self.gm = QwenGM(api_key, base_url, model)
+        self.unity_bridge = unity_bridge
     
     def post_preview(self, tweet_task):
         print("\n[Tweet] Post today's stream preview...\n")
+        self.unity_bridge.send_tweet_show()
         content = tweet_task.get("content","")
         template_path = project_root / "configs" / "prompt_templates" / "tweet.txt"
         p = template_path.read_text(encoding="utf-8")
@@ -34,7 +36,9 @@ class Executor:
         final_prompt += f"\n[使用者輸入]\n{content}\n"
         print(f"\n[Tweet] Using prompt as \n{final_prompt}\n")
         response = self.llm.ask_json(final_prompt)
-        print(f"\n[Tweet] Get prompt as \n{response}\n")
+        tweet_content = response.get("tweet","")
+        self.unity_bridge.send_tweet_update(tweet_content)
+        print(f"\n[Tweet] Get prompt as \n{tweet_content}\n")
 
     def post_communication(self, tweet_task):
         print("\n[Tweet] Post communication tag...\n")

@@ -33,6 +33,28 @@ class UnityBridge:
             "time": time_str
         })
 
+    def send_tweet_show(self):
+        message = {
+            "event": "tweet",
+            "action": "show"
+        }
+        self.send(message)
+
+    def send_tweet_update(self, text: str):
+        message = {
+            "event": "tweet",
+            "action": "update",
+            "text": text
+        }
+        self.send(message)
+
+    def send_tweet_hide(self):
+        message = {
+            "event": "tweet",
+            "action": "hide"
+        }
+        self.send(message)
+
     def update_background(self, game_datetime):
         hour = game_datetime.hour
 

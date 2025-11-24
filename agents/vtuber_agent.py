@@ -24,9 +24,9 @@ class VtuberAgent:
         self.game_time = GameTime(speed_ratio=1) # initialize gametime 
         self.todolist_loader = TodoListLoader() # update everyday
         self.day_started = False
-        self.planner = Planner()
         self.unity = UnityBridge()
-
+        self.planner = Planner(self.unity)
+        
     def start_daily_loop(self):
         # Time Controller(CPU Clock mitai)
         print("\n[Agent] Daily loop started!")

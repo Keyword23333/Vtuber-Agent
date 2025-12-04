@@ -107,9 +107,33 @@ end
 #### 2.3 集群pipeline
 - 运行 `vtuberAgent.py` ，时间控制，行程规划和执行动作都由该 `Agent` 衍生。
 - 新的一天从 `8:00am`  开始，当游戏时间达到 `8:00am` 的时候，启动新一天重启函数，检查邮箱里面当天的邮件以及当天的游戏库存情况，将两者通过模板整理成 `prompt` 传输给大模型，大模型返回 `json` 格式的 `todolist` 里面涵盖了一天的各种行程。`todolist` 格式规范如下：
+	```txt
+	{
+		"date": "%Y-%m-%d",
+		
+		"tasks": [{
+			task1
+		},
+		{
+			task2
+		}
+		]
+	}
+	其中每個task的結構為：
+
+	{
+		"type": 
+		"category":
+		"start_time":
+		"end_time":
+		"content":
+	}
 	```
-	
-	```
+	- 其中"type"表示平臺類型，必填，只能從下面幾個選項中選擇："stream","company","cover","store","tweet","rest","project"（其中project是想企劃案）
+	- "category"表示平臺下的任務細分，其中"stream","cover","store,company"沒有這一項；"tweet"下可選參數："preview","communication".
+	- "start_time" 和 "end_time"表示開始和結束的時間
+	- "content"就是任務的具體内容。如果有直播，那麽推特和封面的content和直播主題吻合（推特的content最好包括直播的時間和内容概括即可，不需要很具體）。
+- 接下來運行 `planner` 的各項功能，執行 `todolist` 裏面的各項任務。
 
 ### 3 小模型效果
 
@@ -224,6 +248,7 @@ Prompt: 你喜欢看书吗。
 
 #### 场景一：日常运营
 
+
 #### 场景二：直播交互
 
 #### 场景三：休闲场景
@@ -243,7 +268,7 @@ python main.py
 >运行 `main.py` 之后python端会等待Unity连接，此时运行Unity项目就可以连接成功，项目会自动运行。
 
 >如果需要使用个性化的小模型，就需要额外启动一个服务器并且修改 `main.py` 的输入
-- 下载微调融合后的模型参数，下载地址为：通过网盘分享的文件: https://pan.baidu.com/s/1m_dPAFBAPJeKqqa5JfT0oQ?pwd=2333 ，下载完成之后将模型放入 `ai/Models` 文件下
+- 下载微调融合后的模型参数，下载地址为：，下载完成之后将模型放入./Models文件下
 - 另外开一个终端进入 `ai` 文件夹，运行 `fastapi.py` ，启动小模型服务器
 	```bash
 	cd ai

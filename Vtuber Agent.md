@@ -204,7 +204,7 @@ end
   }
 ]
 ```
-![[Pasted image 20251203221237.png]]
+![描述文本](./assets/Pastedimage20251203221237.png)
 #### 3.2 模型训练
 
 ##### 3.2.1 基础模型选择
@@ -231,7 +231,8 @@ end
 
 >从服务器WebUI可以成功访问就说明已经配置成功了。
 
-![[Pasted image 20251204000839.png]]
+
+![描述文本](./assets/Pastedimage20251204000839.png)
 #### 3.4 效果展示
 
 >可以在服务器WebUI端直接和模型进行对话，但是不会很方便。所以可以直接写一个模块在python端进行对话。
@@ -357,38 +358,48 @@ LoRA的优势不仅在于“单模型个性化微调”，还能支撑VTuberAgen
 
 >游戏开始时，可能会有不同的天气：
 - 可能是晴天：
-![[7fd1af812e0e4c3616ae717a926e535d.png]]
+
+![描述文本](./assets/7fd1af812e0e4c3616ae717a926e535d.png)
 
 - 也可能会下雨：
-![[9a603e7a00c259a9fbd32c47092e594e.png]]
+
+![描述文本](./assets/9a603e7a00c259a9fbd32c47092e594e.png)
 
 - 晚上也会下雨
-![[063a365977980c6c2627b468919ff461.png]]
+
+![描述文本](./assets/063a365977980c6c2627b468919ff461.png)
 
 - 晴天的傍晚
-![[b64efa8edda5dc8cfe8e66433cb2119b.png]]
+
+![描述文本](./assets/b64efa8edda5dc8cfe8e66433cb2119b.png)
 
 >一般有直播的一天都会有 `SNS` 的预告。
 - 打开 `SNS` 界面
-![[f4fd1bf9bcde32299f800d73f22df97f.png]]
+
+![描述文本](./assets/f4fd1bf9bcde32299f800d73f22df97f.png)
 
 - 发送消息
-![[2ae34f5b6ec4fe924a45678480a54179.png]]
+
+![描述文本](./assets/2ae34f5b6ec4fe924a45678480a54179.png)
 
 #### 场景二：直播交互
 
 >一天有直播肯定会触发直播封面制作
 - 封面制作完成后会被保存在本地
-![[ad1449f635e5c70b2826b710fea32b58.png]]
+
+![描述文本](./assets/ad1449f635e5c70b2826b710fea32b58.png)
 
 - 当天直播开始之后就会作为直播封面
-![[c9bdb9d253fb3860cc0327db9d4587c8.png]]
+
+![描述文本](./assets/c9bdb9d253fb3860cc0327db9d4587c8.png)
 
 - 也可以和主播对话，比如说我们可以问”主播喜欢喝什么饮料？“
 	- 使用 `qwen` 模型进行问答
-		![[dd00cd1d911aa431294fb44625cc595a.png]]
+		
+		![描述文本](./assets/dd00cd1d911aa431294fb44625cc595a.png)
 	- 使用小模型进行问答
-		![[deda842cd3e3a317144c2f7bdb00df19.png]]
+		
+		![描述文本](./assets/deda842cd3e3a317144c2f7bdb00df19.png)
 
 ### 6 快速开始
 

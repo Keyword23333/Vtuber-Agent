@@ -132,7 +132,7 @@ class Executor:
         print("\n[Stream] Stream Starting...\n")
         content = stream_task.get("content","")
         final_prompt = ""
-        final_prompt += "請根據content説一段直播開場白，不要超過20字，要求返回json{'talk':'str'}格式："
+        final_prompt += "請根據content説一段直播開場白，不要超過20字，要求返回json{'talk':'str'}格式，一定要簡體中文："
         final_prompt += content
 
         print(f"\n[Stream] Using prompt as: \n{final_prompt}\n")
@@ -143,7 +143,7 @@ class Executor:
         self.unity_bridge.send_stream_talk(resp.get("talk",""))
 
         time.sleep(5)
-        resp = self.llm.ask_json("你是一位三花貓虛擬主播，名字叫苞米。現在有觀衆問你，你喜歡喝什麽飲料，請回答不要超過20字，要求返回json{'talk':'str'}格式")
+        resp = self.llm.ask_json("你是一位三花貓虛擬主播，名字叫苞米。現在有觀衆問你，你喜歡喝什麽飲料，請回答不要超過20字，一定要簡體中文，要求返回json{'talk':'str'}格式")
 
         print(f"\n[Stream] Say something as :\n {resp}\n")
         self.unity_bridge.send_stream_talk(resp.get("talk",""))

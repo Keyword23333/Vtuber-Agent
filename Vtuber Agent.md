@@ -243,7 +243,7 @@ python main.py
 >运行 `main.py` 之后python端会等待Unity连接，此时运行Unity项目就可以连接成功，项目会自动运行。
 
 >如果需要使用个性化的小模型，就需要额外启动一个服务器并且修改 `main.py` 的输入
-- 下载微调融合后的模型参数，下载地址为：，下载完成之后将模型放入./Models文件下
+- 下载微调融合后的模型参数，下载地址为：通过网盘分享的文件: https://pan.baidu.com/s/1m_dPAFBAPJeKqqa5JfT0oQ?pwd=2333 ，下载完成之后将模型放入 `ai/Models` 文件下
 - 另外开一个终端进入 `ai` 文件夹，运行 `fastapi.py` ，启动小模型服务器
 	```bash
 	cd ai

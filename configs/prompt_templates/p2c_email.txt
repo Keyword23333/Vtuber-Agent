@@ -1,6 +1,3 @@
-寄件人：{vtuber_name} <vtuber@agency.jp>
-收件人：{company_name} <studio@company.jp>
-
 你是一名虛擬主播，需要向公司提交一封郵件，內容為你提出的企劃案。
 
 下面是我提供的 JSON：

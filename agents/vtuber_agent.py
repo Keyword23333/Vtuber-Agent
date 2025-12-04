@@ -10,6 +10,7 @@ from utils.game_time import GameTime
 from utils.loader import TodoListLoader
 from utils.unity_bridge import UnityBridge
 from behavior.planner import Planner
+import random
 
 class VtuberAgent:
     """
@@ -24,6 +25,7 @@ class VtuberAgent:
         self.game_time = GameTime(speed_ratio=1) # initialize gametime 
         self.todolist_loader = TodoListLoader() # update everyday
         self.day_started = False
+        self.weather = "sunshine"
         self.unity = UnityBridge()
         self.planner = Planner(self.unity)
         
@@ -39,7 +41,7 @@ class VtuberAgent:
             current_total_minutes = int(current_hours) * 60 + int(current_minutes)
             print(f"[时间测试] 游戏时间: {current_game_time.strftime('%Y-%m-%d %H:%M:%S')} | ")
             self.unity.send_time(current_time_str)
-            self.unity.update_background(current_game_time)
+            self.unity.update_background(current_game_time, self.weather)
             # Work start from 8:00 am every day(includeing weekends)
             if self.day_started == False and current_hour == 8:
                 """
@@ -52,11 +54,19 @@ class VtuberAgent:
             
             if self.schedule:
                 next_task = self.schedule[0]
-                task_start_time = next_task.get("start_time","")
-                task_hours, task_minutes = task_start_time.split(":")
-                task_total_minutes = int(task_hours) * 60 + int(task_minutes)
-                if current_total_minutes >= task_total_minutes:
-                    self.planner.classifier(next_task, current_game_time)
+
+                start_h, start_m = next_task["start_time"].split(":")
+                end_h, end_m = next_task["end_time"].split(":")
+
+                start_minutes = int(start_h) * 60 + int(start_m)
+                end_minutes   = int(end_h) * 60 + int(end_m)
+
+                if (not next_task.get("started", False)) and current_total_minutes >= start_minutes:
+                    next_task["started"] = True
+                    self.planner.classifier(next_task, current_game_time, True)
+
+                if current_total_minutes >= end_minutes:
+                    self.planner.classifier(next_task, current_game_time, False)
                     self.schedule.pop(0)
             # end the day at 3:00 am
             if current_hour == 3:
@@ -77,8 +87,9 @@ class VtuberAgent:
         self.todolist = self.planner.generate_todolist(current_date)
         self.schedule = self.planner.normalize(self.todolist)
         print(self.todolist)
+        self.weather = "sunshine" if random.random() < 0.6 else "rain"
 
-
+        print(f"\n[Weather] Today's weather: {self.weather}\n")
 
 if __name__ == "__main__":
     vtuber = VtuberAgent()

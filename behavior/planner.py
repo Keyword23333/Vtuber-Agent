@@ -24,19 +24,34 @@ class Planner:
         self.executor = Executor(unity_bridge,api_key, base_url, model)
 
 
-    def classifier(self, task, game_time):
+    def classifier(self, task, game_time, start):
         print(task)
         type = task.get("type","")
         if type == "tweet":
             category = task.get("category","")
             if category == "preview":
-                self.executor.post_preview(task)
+                if start:
+                    self.unity_bridge.send_tweet_show()
+                    self.executor.post_preview(task)
+                else:
+                    self.unity_bridge.send_tweet_hide()
             elif category == "communication":
                 self.executor.post_communication(task)
-        if type == "cover":
-            self.executor.generate_cover(task)
-        if type == "project":
+        if type == "cover" and start == True:
+            self.executor.generate_cover(task, game_time)
+            
+        if type == "project" and start == True:
             self.executor.post_project(task, game_time)
+        if type == "company":
+            pass
+        if type == "store":
+            pass
+        if type == "stream" :
+            if start:
+                self.unity_bridge.send_stream_start(game_time)
+                self.executor.stream_task(task)
+            else:
+                self.unity_bridge.send_stream_end()
         
     def normalize(self, todolist):
         tasks = todolist.get("tasks",[])
@@ -79,16 +94,14 @@ class Planner:
         p = p.replace("{company_tasks}", email)
 
         final_prompt += p
+        print(f"\n[Todolist] Using prompt as \n{final_prompt}\n")
         content = self.llm.ask_json(final_prompt)
         return content
     
-
-
 # for test, please ignore...
 if __name__ == "__main__":
     planner = Planner()
     game_date = datetime(2077, 1, 1, 8, 0, 0)
-
     planner.generate_todolist(game_date)
         
 

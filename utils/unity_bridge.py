@@ -55,22 +55,64 @@ class UnityBridge:
         }
         self.send(message)
 
-    def update_background(self, game_datetime):
+    def send_cover_image(self, url:str, game_time):
+        game_time_str = game_time.strftime("%Y-%m-%d")
+        self.send({
+        "event": "cover_image",
+        "url": url,
+        "game_time": game_time_str
+        })
+
+    def send_stream_start(self,game_time):
+        game_time_str = game_time.strftime("%Y-%m-%d")
+        self.send({
+            "event": "stream",
+            "action": "start",
+            "game_time": game_time_str
+        })
+
+    def send_stream_talk(self,talk):
+        self.send({
+            "event": "stream",
+            "action": "talk",
+            "talk": talk
+        })
+
+    def send_stream_end(self):
+        self.send({
+            "event": "stream",
+            "action": "end"
+        })
+
+    def update_background(self, game_datetime, weather):
         hour = game_datetime.hour
 
-        if hour >= 20 or hour < 5:
-            mode = "night"
-        elif hour >= 17 and hour < 20:
-            mode = "evening"
+        if weather == "sunshine":
+            if hour >= 20 or hour < 5:
+                mode = "night"
+            elif hour >= 17 and hour < 20:
+                mode = "evening"
+            else:
+                mode = "day"
+
+            if mode != self.last_background_state:
+                self.last_background_state = mode
+                self.send({
+                    "event": "background",
+                    "mode": mode,
+                })
+                print(f"[Python] Background changed to: {mode}")
+
         else:
-            mode = "day"
+            if hour >= 19 or hour < 7:
+                mode = "rainnight"
+            else:
+                mode = "rainday"
 
-        if mode != self.last_background_state:
-            self.last_background_state = mode
-            self.send({
-                "event": "background",
-                "mode": mode
-            })
-            print(f"[Python] Background changed to: {mode}")
-
-        
+            if mode != self.last_background_state:
+                self.last_background_state = mode
+                self.send({
+                    "event": "background",
+                    "mode": mode,
+                })
+                print(f"[Python] Background changed to: {mode}")

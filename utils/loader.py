@@ -38,10 +38,11 @@ class MailLoader:
         date_str = game_date.strftime("%Y-%m-%d")
         self.mail_file = self.list_dir/ type / f"{date_str}.txt"
         if not self.mail_file.exists():
-            raise FileNotFoundError(f"e-Mail not found: {self.mail_file}")
-        
-        with open(self.mail_file, "r", encoding="utf-8") as f:
-            data = f.read()
+            #raise FileNotFoundError(f"e-Mail not found: {self.mail_file}")
+            data = "None"
+        else:
+            with open(self.mail_file, "r", encoding="utf-8") as f:
+                data = f.read()
 
         return data
 

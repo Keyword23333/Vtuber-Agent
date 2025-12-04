@@ -148,6 +148,16 @@ class QwenGM:
             return {}
 
 
+class DeepseekVtuber:
+    """
+    identity small language model
+    """
+    def __init__(self, url):
+        self.url = url
+
+    def ask_json(self, url):
+        pass
+
 # for test, please ignore...
 if __name__ == "__main__":
     gm = QwenGM()
